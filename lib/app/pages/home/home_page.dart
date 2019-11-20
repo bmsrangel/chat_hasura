@@ -1,4 +1,3 @@
-import 'package:chat_hasura/app/app_bloc.dart';
 import 'package:chat_hasura/app/app_module.dart';
 import 'package:chat_hasura/app/app_repository.dart';
 import 'package:chat_hasura/app/models/message_model.dart';
@@ -18,15 +17,6 @@ class _HomePageState extends State<HomePage> {
   var repo = AppModule.to.get<AppRepository>();
   Stream<List<MessageModel>> messagesOut;
   final bloc = HomeModule.to.bloc<HomeBloc>();
-  final appBloc = AppModule.to.bloc<AppBloc>();
-
-  void sendMessage() {
-    repo.sendMessage(
-      bloc.controller.text,
-      appBloc.userController.value.id,
-    );
-    bloc.controller.clear();
-  }
 
   @override
   void initState() {
@@ -67,7 +57,7 @@ class _HomePageState extends State<HomePage> {
                       border: OutlineInputBorder(),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.send),
-                        onPressed: sendMessage,
+                        onPressed: bloc.sendMessage,
                       )),
                 ),
               ],
